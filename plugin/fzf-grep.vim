@@ -46,6 +46,10 @@ def SetCloseCb(file: string): func(channel): string
   def Callback(channel: channel): string
     var data: list<string> = readfile(file)
 
+    if data->len() < 2
+      return execute([':$bwipeout', ':', $"call delete('{file}')"])
+    endif
+
     var key   = data->get(0)
     var value = data->get(-1)
 
@@ -101,7 +105,7 @@ def FzfGR( ): void
 
   var fzf_previous_default_command = $FZF_DEFAULT_COMMAND
 
-  $FZF_DEFAULT_COMMAND = 'rg --color=ansi --line-number .'
+  $FZF_DEFAULT_COMMAND = 'rg --color=ansi --line-number . || exit 0'
 
   try
     term_start(
