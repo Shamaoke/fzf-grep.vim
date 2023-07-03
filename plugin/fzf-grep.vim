@@ -81,7 +81,7 @@ def SetCloseCb(file: string): func(channel): string
 
 enddef
 
-def ExtendCommandOptions(options: list<string>): list<string>
+def ExtendTermCommandOptions(options: list<string>): list<string>
   var extensions = [ ]
 
   return options->extendnew(extensions)
@@ -116,7 +116,7 @@ def FzfGR( ): void
     term_start(
       config
         ->get('term_command')
-        ->ExtendCommandOptions(),
+        ->ExtendTermCommandOptions(),
       config
         ->get('term_options')
         ->ExtendTermOptions())
