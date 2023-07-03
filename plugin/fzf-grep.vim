@@ -4,7 +4,7 @@ vim9script
 ##                ##
 
 var config = {
-  'command': [
+  'term_command': [
     'fzf',
     '--no-multi',
     '--delimiter=:',
@@ -110,7 +110,7 @@ def FzfGR( ): void
   try
     term_start(
       config
-        ->get('command')
+        ->get('term_command')
         ->ExtendCommandOptions(),
       config
         ->get('term_options')
