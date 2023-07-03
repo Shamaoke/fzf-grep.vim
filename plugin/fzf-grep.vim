@@ -11,6 +11,13 @@ var config = {
     'height': 0.8
   },
 
+  'commands': {
+    'enter': 'edit',
+    'ctrl-t': 'tabedit',
+    'ctrl-s': 'split',
+    'ctrl-v': 'vsplit'
+  },
+
   'term_command': [
     'fzf',
     '--no-multi',
@@ -65,13 +72,13 @@ def SetCloseCb(file: string): func(channel): string
     var commands: list<string>
 
     if key == 'enter'
-      commands = [':$bwipeout', $"edit +{line} {path}", $"call delete('{file}')"]
+      commands = [':$bwipeout', $"{config['commands']['enter']} +{line} {path}", $"call delete('{file}')"]
     elseif key == 'ctrl-t'
-      commands = [':$bwipeout', $"tabedit +{line} {path}", $"call delete('{file}')"]
+      commands = [':$bwipeout', $"{config['commands']['ctrl-t']} +{line} {path}", $"call delete('{file}')"]
     elseif key == 'ctrl-s'
-      commands = [':$bwipeoput', $"split +{line} {path}", $"call delete('{file}')"]
+      commands = [':$bwipeout', $"{config['commands']['ctrl-s']} +{line} {path}", $"call delete('{file}')"]
     elseif key == 'ctrl-v'
-      commands = [':$bwipeoput', $"vsplit +{line} {path}", $"call delete('{file}')"]
+      commands = [':$bwipeout', $"{config['commands']['ctrl-v']} +{line} {path}", $"call delete('{file}')"]
     else
       commands = [':$bwipeout', ':', $"call delete('{file}')"]
     endif
