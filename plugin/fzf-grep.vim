@@ -17,7 +17,7 @@ var config = {
     '--delimiter=:',
     '--preview-window=border-left:+{2}-/2',
     '--preview=bat --color=always --style=numbers --highlight-line={2} {1}',
-    '--nth=3',
+    '--nth=1,3',
     '--ansi',
     '--expect=esc,enter,ctrl-t,ctrl-s,ctrl-v'
   ],
