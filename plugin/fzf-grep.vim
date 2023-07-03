@@ -4,6 +4,8 @@ vim9script
 ##                ##
 
 var config = {
+  'fzf_default_command': $FZF_DEFAULT_COMMAND,
+
   'geometry': {
     'width': 0.8,
     'height': 0.8
@@ -106,28 +108,40 @@ def ExtendPopupOptions(options: dict<any>): dict<any>
   return options->extendnew(extensions)
 enddef
 
+def SetFzfCommand( ): void
+  var command: string
+
+  command = 'rg --color=ansi --line-number . || exit 0'
+
+  $FZF_DEFAULT_COMMAND = command
+enddef
+
+def RestoreFzfCommand( ): void
+  $FZF_DEFAULT_COMMAND = config->get('fzf_default_command')
+enddef
+
+def Start( ): void
+  term_start(
+    config
+      ->get('term_command')
+      ->ExtendTermCommandOptions(),
+    config
+      ->get('term_options')
+      ->ExtendTermOptions())
+    ->popup_create(
+        config
+          ->get('popup_options')
+          ->ExtendPopupOptions())
+enddef
+
 def FzfGR( ): void
-
-  var fzf_previous_default_command = $FZF_DEFAULT_COMMAND
-
-  $FZF_DEFAULT_COMMAND = 'rg --color=ansi --line-number . || exit 0'
+  SetFzfCommand()
 
   try
-    term_start(
-      config
-        ->get('term_command')
-        ->ExtendTermCommandOptions(),
-      config
-        ->get('term_options')
-        ->ExtendTermOptions())
-      ->popup_create(
-          config
-            ->get('popup_options')
-            ->ExtendPopupOptions())
+    Start()
   finally
-    $FZF_DEFAULT_COMMAND = fzf_previous_default_command
+    RestoreFzfCommand()
   endtry
-
 enddef
 
 command FzfGR FzfGR()
