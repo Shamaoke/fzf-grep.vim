@@ -6,7 +6,9 @@ vim9script
 var config = {
   'fzf_default_command': $FZF_DEFAULT_COMMAND,
 
-  'fzf_command': 'rg --color=ansi --line-number . || exit 0',
+  'fzf_data': ( ) => 'rg --color=ansi --line-number .',
+
+  'fzf_command': (data) => $"{data} || exit 0",
 
   'tmp_file': ( ) => tempname(),
 
@@ -107,8 +109,8 @@ def ExtendPopupOptions(options: dict<any>): dict<any>
   return options->extendnew(extensions)
 enddef
 
-def SetFzfCommand( ): void
-  $FZF_DEFAULT_COMMAND = config->get('fzf_command')
+def SetFzfCommand(data: string): void
+  $FZF_DEFAULT_COMMAND = config.fzf_command(data)
 enddef
 
 def RestoreFzfCommand( ): void
@@ -130,7 +132,7 @@ def CreateFzfPopup( ): void
 enddef
 
 def Run( ): void
-  SetFzfCommand()
+  SetFzfCommand(config.fzf_data())
 
   try
     CreateFzfPopup()
