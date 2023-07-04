@@ -6,6 +6,8 @@ vim9script
 var config = {
   'fzf_default_command': $FZF_DEFAULT_COMMAND,
 
+  'fzf_command': 'rg --color=ansi --line-number . || exit 0',
+
   'geometry': {
     'width': 0.8,
     'height': 0.8
@@ -104,11 +106,7 @@ def ExtendPopupOptions(options: dict<any>): dict<any>
 enddef
 
 def SetFzfCommand( ): void
-  var command: string
-
-  command = 'rg --color=ansi --line-number . || exit 0'
-
-  $FZF_DEFAULT_COMMAND = command
+  $FZF_DEFAULT_COMMAND = config->get('fzf_command')
 enddef
 
 def RestoreFzfCommand( ): void
