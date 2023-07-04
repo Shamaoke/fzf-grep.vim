@@ -12,10 +12,10 @@ var config = {
   },
 
   'commands': {
-    'enter': 'edit',
-    'ctrl-t': 'tabedit',
-    'ctrl-s': 'split',
-    'ctrl-v': 'vsplit'
+    'enter':  (entry) => $"edit +{entry->split(':')->get(1)} {entry->split(':')->get(0)}",
+    'ctrl-t': (entry) => $"tabedit +{entry->split(':')->get(1)} {entry->split(':')->get(0)}",
+    'ctrl-s': (entry) => $"split +{entry->split(':')->get(1)} {entry->split(':')->get(0)}",
+    'ctrl-v': (entry) => $"vsplit +{entry->split(':')->get(1)} {entry->split(':')->get(0)}"
   },
 
   'term_command': [
@@ -26,7 +26,7 @@ var config = {
     '--preview=bat --color=always --style=numbers --highlight-line={2} {1}',
     '--nth=1,3',
     '--ansi',
-    '--expect=esc,enter,ctrl-t,ctrl-s,ctrl-v'
+    '--expect=enter,ctrl-t,ctrl-s,ctrl-v'
   ],
 
   'term_options': {
@@ -61,27 +61,15 @@ def SetCloseCb(file: string): func(channel): string
     var data: list<string> = readfile(file)
 
     if data->len() < 2
-      return execute([':$bwipeout', ':', $"call delete('{file}')"])
+      return execute([':$bwipeout', $"call delete('{file}')"])
     endif
 
     var key   = data->get(0)
-    var value = data->get(-1)
-
-    var [path, line; _] = value->split(':')
+    var entry = data->get(-1)
 
     var commands: list<string>
 
-    if key == 'enter'
-      commands = [':$bwipeout', $"{config['commands']['enter']} +{line} {path}", $"call delete('{file}')"]
-    elseif key == 'ctrl-t'
-      commands = [':$bwipeout', $"{config['commands']['ctrl-t']} +{line} {path}", $"call delete('{file}')"]
-    elseif key == 'ctrl-s'
-      commands = [':$bwipeout', $"{config['commands']['ctrl-s']} +{line} {path}", $"call delete('{file}')"]
-    elseif key == 'ctrl-v'
-      commands = [':$bwipeout', $"{config['commands']['ctrl-v']} +{line} {path}", $"call delete('{file}')"]
-    else
-      commands = [':$bwipeout', ':', $"call delete('{file}')"]
-    endif
+    commands = [':$bwipeout', config['commands'][key](entry), $"call delete('{file}')"]
 
     return execute(commands)
   enddef
