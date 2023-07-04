@@ -8,6 +8,8 @@ var config = {
 
   'fzf_command': 'rg --color=ansi --line-number . || exit 0',
 
+  'tmp_file': ( ) => tempname(),
+
   'geometry': {
     'width': 0.8,
     'height': 0.8
@@ -87,7 +89,7 @@ def ExtendTermCommandOptions(options: list<string>): list<string>
 enddef
 
 def ExtendTermOptions(options: dict<any>): dict<any>
-  var tmp_file = tempname()
+  var tmp_file = config['tmp_file']()
 
   var extensions =
     { 'out_name': tmp_file,
