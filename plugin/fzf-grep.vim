@@ -12,7 +12,7 @@ var spec = {
 
   'fzf_command': (data) => $"{data} || exit 0",
 
-  'tmp_file': ( ) => tempname(),
+  'set_tmp_file': ( ) => tempname(),
 
   'geometry': {
     'width': 0.8,
