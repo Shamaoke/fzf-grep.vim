@@ -34,6 +34,7 @@ var spec = {
     '--preview=bat --color=always --style=numbers --highlight-line={2} {1}',
     '--nth=1,3',
     '--ansi',
+    '--bind=alt-j:preview-down,alt-k:preview-up',
     '--expect=enter,ctrl-t,ctrl-s,ctrl-v'
   ],
 
