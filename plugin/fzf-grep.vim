@@ -8,9 +8,9 @@ import 'fzf-run.vim' as Fzf
 var spec = {
   'fzf_default_command': $FZF_DEFAULT_COMMAND,
 
-  'fzf_data': ( ) => 'rg --color=ansi --line-number .',
+  'set_fzf_data': ( ) => 'rg --color=ansi --line-number .',
 
-  'fzf_command': (data) => $"{data} || exit 0",
+  'set_fzf_command': (data) => $"{data} || exit 0",
 
   'set_tmp_file': ( ) => tempname(),
 
