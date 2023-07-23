@@ -38,6 +38,8 @@ var spec = {
     '--expect=enter,ctrl-t,ctrl-s,ctrl-v'
   ],
 
+  'set_term_command_options': ( ) => [ ],
+
   'term_options': {
     'hidden': true,
     'out_io': 'file'
