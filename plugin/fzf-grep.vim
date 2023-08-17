@@ -6,13 +6,12 @@ vim9script
 import 'fzf-run.vim' as Fzf
 
 var spec = {
-  'fzf_default_command': $FZF_DEFAULT_COMMAND,
-
-  'set_fzf_data': ( ) => 'rg --color=ansi --line-number .',
-
-  'set_fzf_command': (data) => $"{data} || exit 0",
+  'set_fzf_data': (data) =>
+    systemlist('rg --color=ansi --line-number . 2>/dev/null')
+      ->writefile(data),
 
   'set_tmp_file': ( ) => tempname(),
+  'set_tmp_data': ( ) => tempname(),
 
   'geometry': {
     'width': 0.8,
@@ -34,11 +33,12 @@ var spec = {
     '--preview=bat --color=always --style=numbers --highlight-line={2} {1}',
     '--nth=1,3',
     '--ansi',
-    '--bind=alt-j:preview-down,alt-k:preview-up',
+    '--bind=alt-j:preview-down,alt-k:preview-up,alt-p:toggle-preview',
     '--expect=enter,ctrl-t,ctrl-s,ctrl-v'
   ],
 
-  'set_term_command_options': ( ) => [ ],
+  'set_term_command_options': (data) =>
+    [ $"--bind=start:reload^cat '{data}'^" ],
 
   'term_options': {
     'hidden': true,
