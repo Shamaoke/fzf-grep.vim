@@ -31,7 +31,7 @@ var spec = {
     '--delimiter=:',
     '--preview-window=border-left:+{2}-/2',
     '--preview=bat --color=always --style=numbers --highlight-line={2} {1}',
-    '--nth=1,3..',
+    '--nth=3..',
     '--ansi',
     '--bind=ctrl-h:first,ctrl-e:last,alt-h:preview-top,alt-e:preview-bottom,alt-j:preview-down,alt-k:preview-up,alt-p:toggle-preview,alt-x:change-preview-window(right,90%|right,50%)',
     '--expect=enter,ctrl-t,ctrl-s,ctrl-v'
